@@ -5,6 +5,7 @@ new WOW().init();
 var acciones = {
 	listo : function(){
 		
+
 		jQuery("#lacarta .boton-amarillo").click(acciones.clickbtnamarillo);
 		// jQuery("#lacarta .conteendor-cuadrado").find("img").eq(0).click(acciones.obtenersrc);
 		//jQuery("#lacarta .conteendor-cuadrado").click(acciones.obtenersrc);
@@ -245,6 +246,7 @@ var acciones = {
 	},
 
 	precarga:function(){
+		
 
 		jQuery(".trama-2").fadeOut("slow");
 		jQuery(".logo-load").fadeOut("slow",function()
@@ -259,17 +261,27 @@ var acciones = {
 			}
 		},1000);
 		acciones.redimensionar();
+
 	},
 
 	redimensionar:function(){
+		var cabecera = jQuery(".cabecera");
+		var posicion_menu = cabecera.offset().top;
+		alto_menu = cabecera.innerHeight();
 		ancho_pantalla = jQuery(window).width();
-		alto_menu = jQuery(".cabecera").innerHeight();
 
 		if(ancho_pantalla < 768)
 		{
 			jQuery(".cabecera .menu").css({"padding-top":alto_menu,"padding-bottom":alto_menu});		
 		}else{
 			jQuery(".cabecera .menu").css({"padding-top":0,"padding-bottom":0});
+		}
+		
+		if(posicion_menu > alto_menu)
+		{
+			cabecera.addClass("fondo");
+		}else{
+			cabecera.removeClass("fondo");
 		}
 
 		// alto_pantalla = jQuery(window).height();
