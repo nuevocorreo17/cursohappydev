@@ -76,13 +76,15 @@ var acciones = {
 					if(data.tipo == 1)
 					{
 						jQuery("#respuesta").css({"color":"green"}).html(data.mensaje);
-					}else{
+					}else if(data.tipo == 2){
 
 						jQuery.each(data.errores,function(indice,elemento){
 							var html = "<label id='error-"+elemento.id+"' class='error'>"+elemento.mensaje+"</label>";
 							jQuery("#"+elemento.id).addClass("error");
 							jQuery("#"+elemento.id).closest(".form-bloques").append(html);
 						});
+					}else{
+						alert(data.mensaje);
 					}
 				}).fail(function(error){
 					jQuery("#respuesta").css({"color":"red"}).html(error.responseText);
