@@ -21,7 +21,7 @@ class Database{
 			$this->conn = new PDO("mysql:host=".$this->host.";dbname=".$this->dbname,$this->user,$this->pass);	
 			$this->conn->exec("set names utf8");
 		} catch (Exception $e) {
-			echo "El error es: "-$e->getMessage();
+			echo "El error es: ".$e->getMessage();
 		}
 
 		return $this->conn;
