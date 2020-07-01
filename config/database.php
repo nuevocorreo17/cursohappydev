@@ -8,8 +8,8 @@ class Database{
 
 	private $host = "localhost";
 	private $dbname = "bd_contacto";
-	private $user = "user_contacto";
-	private $pass = "Alonso12345";
+	private $user = "user_contacto"; //root (si estas trabajando en tu xampp)
+	private $pass = "Alonso12345"; //"" (si estas trabajando en tu xampp)
 
 	public $conn;
 
