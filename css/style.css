@@ -319,7 +319,7 @@ footer .pie .lista-redes a{margin-left:1rem;margin-right:1rem;font-size:1.5rem;}
 .titulos{font-size:4rem;}
 .cabecera .link-logo {
   position: relative;
-  z-index: 2
+  z-index: 2;
 }
 .cabecera .link-logo .logo{width:3.5rem;height:auto;}
 
