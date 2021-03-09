@@ -199,6 +199,13 @@ var acciones = {
 
 	},
 
+	cerrarmenu: function()
+	{
+		jQuery(".cabecera .menu").removeClass("abierto");
+		jQuery("body").removeClass("abierto");
+		jQuery(".cabecera .hamb").find("i").removeClass("fa-times");
+	},
+
 	irancla:function(e){
 		e.preventDefault();
 		var ancla = this.hash;
@@ -206,6 +213,7 @@ var acciones = {
 
 		if (jQuery(ancla).length > 0) 
 		{
+			acciones.cerrarmenu();
 			acciones.detalleancla(ancla);
 		}else{
 			window.location.href = url;
@@ -271,6 +279,8 @@ var acciones = {
 		var posicion_menu = cabecera.offset().top;
 		alto_menu = cabecera.innerHeight();
 		ancho_pantalla = jQuery(window).width();
+
+		acciones.cerrarmenu();
 
 		if(ancho_pantalla < 768)
 		{
