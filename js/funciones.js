@@ -261,7 +261,7 @@ var acciones = {
 		jQuery(".trama-2").fadeOut("slow");
 		jQuery(".logo-load").fadeOut("slow",function()
 		{
-			jQuery("body").toggleClass("abierto");
+			jQuery("body").removeClass("abierto");
 		});
 		setTimeout(function(){
 			var ancla = window.location.hash;
