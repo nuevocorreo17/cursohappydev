@@ -10,7 +10,7 @@ var acciones = {
 		// jQuery("#lacarta .conteendor-cuadrado").find("img").eq(0).click(acciones.obtenersrc);
 		//jQuery("#lacarta .conteendor-cuadrado").click(acciones.obtenersrc);
 		jQuery(".cabecera .menu a[href*='#']").click(acciones.irancla);
-		jQuery(".btn-enviar").click(acciones.enviar);
+		//jQuery(".btn-enviar").click(acciones.enviar);
 		jQuery(".cabecera .hamb").click(acciones.abrirmenu);
 		jQuery(".cerrarimagen").click(acciones.cerrarimagen);
 		jQuery(".titulo-acordion").click(acciones.abriracordion);
@@ -33,64 +33,8 @@ var acciones = {
 		    }
 		})
 
-		jQuery("#frmcontacto").validate({
-			rules: {
-				nombre: "required",
-				email: {
-					required: true,
-					email: true
-				},
-				asunto:"required",
-				mensaje: "required"
-			},
-			messages: {
-				nombre: "Por favor, ingresa nombre",
-				email: {
-					required: "Por favor, ingresa email",
-					email: "Por favor, ingresa un email válido",
-				},
-				asunto: "Por favor, ingresa asunto",
-				mensaje: "Por favor, ingresa mensaje",
-			},
-			submitHandler: function(form) {
 
 
-			// jQuery("#nombre").val("holaaaaaaaaaa");
-
-				jQuery.ajax({
-					method : "POST",
-					url : "registro.php",
-					data : jQuery("#frmcontacto").serialize(),
-					dataType: "json"
-				}).done(function(data){
-
-					// if(data.tipo == 1)
-					// {
-					// 	jQuery("#respuesta").css({"color":"green"}).html(data.mensaje);
-					// }else{
-					// 	jQuery("#respuesta").css({"color":"red"}).html(data.mensaje);
-					// }
-					jQuery("#respuesta").html("");
-					jQuery("label.error").remove();
-					jQuery(".form-input.error").removeClass("error");
-					if(data.tipo == 1)
-					{
-						jQuery("#respuesta").css({"color":"green"}).html(data.mensaje);
-					}else if(data.tipo == 2){
-
-						jQuery.each(data.errores,function(indice,elemento){
-							var html = "<label id='error-"+elemento.id+"' class='error'>"+elemento.mensaje+"</label>";
-							jQuery("#"+elemento.id).addClass("error");
-							jQuery("#"+elemento.id).closest(".form-bloques").append(html);
-						});
-					}else{
-						alert(data.mensaje);
-					}
-				}).fail(function(error){
-					jQuery("#respuesta").css({"color":"red"}).html(error.responseText);
-				})
-			}
-		});
 	},
 
 	irsaltarina: function()
@@ -139,6 +83,76 @@ var acciones = {
 
 	enviar:function()
 	{
+		jQuery("#frmcontacto").validate({
+			rules: {
+				nombre: "required",
+				email: {
+					required: true,
+					email: true
+				},
+				asunto:"required",
+				mensaje: "required"
+			},
+			messages: {
+				nombre: "Por favor, ingresa nombre",
+				email: {
+					required: "Por favor, ingresa email",
+					email: "Por favor, ingresa un email válido",
+				},
+				asunto: "Por favor, ingresa asunto",
+				mensaje: "Por favor, ingresa mensaje",
+			},
+			submitHandler: function(form) {
+
+
+			// jQuery("#nombre").val("holaaaaaaaaaa");
+
+
+
+			}
+		});
+
+		var validado = jQuery("#frmcontacto").valid();
+
+		if (validado)
+		{
+			jQuery.ajax({
+					method : "POST",
+					url : "registro.php",
+					data : jQuery("#frmcontacto").serialize(),
+					dataType: "json"
+				}).done(function(data){
+
+					// if(data.tipo == 1)
+					// {
+					// 	jQuery("#respuesta").css({"color":"green"}).html(data.mensaje);
+					// }else{
+					// 	jQuery("#respuesta").css({"color":"red"}).html(data.mensaje);
+					// }
+					jQuery("#respuesta").html("");
+					jQuery("label.error").remove();
+					jQuery(".form-input.error").removeClass("error");
+					if(data.tipo == 1)
+					{
+						jQuery("#respuesta").css({"color":"green"}).html(data.mensaje);
+					}else if(data.tipo == 2){
+
+						jQuery.each(data.errores,function(indice,elemento){
+							var html = "<label id='error-"+elemento.id+"' class='error'>"+elemento.mensaje+"</label>";
+							jQuery("#"+elemento.id).addClass("error");
+							jQuery("#"+elemento.id).closest(".form-bloques").append(html);
+						});
+					}else{
+						alert(data.mensaje);
+					}
+				}).fail(function(error){
+					jQuery("#respuesta").css({"color":"red"}).html(error.responseText);
+				})
+
+		}
+
+
+
 		// jQuery("#contacto").css({"background-color":"#ccc","color":"white"});
 		// var nombre = jQuery("#nombre").val();
 		// var email = jQuery("#email").val();
@@ -323,3 +337,9 @@ jQuery(window).on("load",acciones.precarga);
 jQuery(window).resize(acciones.redimensionar);
 jQuery(window).scroll(acciones.scrollventana);
 jQuery(document).ready(acciones.listo);
+
+
+function validando(token)
+{
+	acciones.enviar();
+}

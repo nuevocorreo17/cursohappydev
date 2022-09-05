@@ -14,6 +14,7 @@
 		<link rel="stylesheet"  href="libs/owl/owl.theme.default.css">
 		<link rel="stylesheet"  href="css/style.css">
 		<link rel="shortcut icon"  href="img/icono.png">
+		 <script src="https://www.google.com/recaptcha/api.js"></script>
 		<script src="https://kit.fontawesome.com/37ef4fca07.js" crossorigin="anonymous"></script>
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery-ui.js"></script>
@@ -76,7 +77,11 @@
 								<textarea id="mensaje"  class="form-input" required  name="mensaje" placeholder="Mensaje"></textarea>
 							</div>
 							<div class="form-bloques form-bloque-boton">
-								<input type="submit" value="ENVIAR" class="btn boton-amarillo btn-enviar">
+								<!-- <input type="submit" value="ENVIAR" class="btn boton-amarillo btn-enviar"> -->
+								<button class="btn boton-amarillo btn-enviar g-recaptcha"
+        data-sitekey="6LcmZNQhAAAAAPwCnnEGR0oaQHWTbTPaTXptUMuK"
+        data-callback='validando'
+        data-action='submit'>ENVIAR</button>
 							</div>
 							<div class="form-bloques form-bloque-rpta">
 								<div id="respuesta"></div>
