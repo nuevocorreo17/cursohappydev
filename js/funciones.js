@@ -4,7 +4,7 @@ new WOW().init();
 
 var acciones = {
 	listo : function(){
-		
+
 
 		jQuery("#lacarta .boton-amarillo").click(acciones.clickbtnamarillo);
 		// jQuery("#lacarta .conteendor-cuadrado").find("img").eq(0).click(acciones.obtenersrc);
@@ -47,7 +47,7 @@ var acciones = {
 				nombre: "Por favor, ingresa nombre",
 				email: {
 					required: "Por favor, ingresa email",
-					email: "Por favor, ingresa un email válido",	
+					email: "Por favor, ingresa un email válido",
 				},
 				asunto: "Por favor, ingresa asunto",
 				mensaje: "Por favor, ingresa mensaje",
@@ -105,7 +105,7 @@ var acciones = {
 	abriracordion:function()
 	{
 		// jQuery(this).nextAll(".cuerpo-acordion").slideDown("slow");
-		// jQuery(this).next(".cuerpo-acordion").slideUp("slow");	
+		// jQuery(this).next(".cuerpo-acordion").slideUp("slow");
 
 		if(jQuery(this).find("i").hasClass("fa-chevron-up"))
 		{
@@ -116,7 +116,7 @@ var acciones = {
 		}
 
 		jQuery(".cuerpo-acordion").slideUp("slow");
-		jQuery(this).next(".cuerpo-acordion").stop().slideToggle("slow");	
+		jQuery(this).next(".cuerpo-acordion").stop().slideToggle("slow");
 	},
 
 	abrirmenu: function(e)
@@ -211,7 +211,7 @@ var acciones = {
 		var ancla = this.hash;
 		var url = jQuery(this).attr("href");
 
-		if (jQuery(ancla).length > 0) 
+		if (jQuery(ancla).length > 0)
 		{
 			acciones.cerrarmenu();
 			acciones.detalleancla(ancla);
@@ -235,7 +235,7 @@ var acciones = {
 	clickbtnamarillo : function(e){
 		e.preventDefault();
 		var src = jQuery(this).closest(".conteendor-cuadrado").find("img").attr("src");
-		
+
 		jQuery(".cuerpoimagen").find("img").attr("src",src);
 		jQuery(".trama").fadeIn("slow",function(){
 			jQuery(".cuerpoimagen").fadeIn("fast");
@@ -252,11 +252,11 @@ var acciones = {
 		jQuery(".cuerpoimagen").fadeOut("slow",function(){
 			jQuery(".cuerpoimagen").find("img").attr("src","");
 			jQuery(".trama").fadeOut("fast");
-		});		
+		});
 	},
 
 	precarga:function(){
-		
+
 
 		jQuery(".trama-2").fadeOut("slow");
 		jQuery(".logo-load").fadeOut("slow",function()
@@ -284,11 +284,11 @@ var acciones = {
 
 		if(ancho_pantalla < 768)
 		{
-			jQuery(".cabecera .menu").css({"padding-top":alto_menu,"padding-bottom":alto_menu});		
+			jQuery(".cabecera .menu").css({"padding-top":alto_menu,"padding-bottom":alto_menu});
 		}else{
 			jQuery(".cabecera .menu").css({"padding-top":0,"padding-bottom":0});
 		}
-		
+
 		if(posicion_menu > alto_menu)
 		{
 			cabecera.addClass("fondo");
