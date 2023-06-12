@@ -56,10 +56,10 @@ var acciones = {
 			jQuery(this).find("i").removeClass("fa-chevron-up");
 		}else{
 			jQuery(".titulo-acordion").find("i").removeClass("fa-chevron-up");
-			jQuery(this).find("i").addClass("fa-chevron-up")
+			jQuery(this).find("i").addClass("fa-chevron-up");
 		}
 
-		jQuery(".cuerpo-acordion").slideUp("slow");
+		jQuery(".cuerpo-acordion").stop().slideUp("slow");
 		jQuery(this).next(".cuerpo-acordion").stop().slideToggle("slow");
 	},
 

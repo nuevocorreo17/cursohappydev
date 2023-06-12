@@ -5,7 +5,7 @@
 ::selection{background-color:var(--amarillo);color:#fff;}
 ::-webkit-input-placeholder{color:var(--marron);;}
 :root{--amarillo:#FFC53D;--marron:#824C00;}
-html{font-size:0.94vw;}
+html{font-size:1vw;}
 body{font-family:'Asap';color:#413E4A;font-weight:200;font-size:1rem;}
 body.abierto{overflow: hidden;}
 a{display:inline-block;}
@@ -243,6 +243,10 @@ footer .pie .lista-redes a{margin-left:1rem;font-size:1.2rem;}
 	padding: 2rem 1rem;
 	display: none;
 	border: 0.1rem solid var(--amarillo);
+}
+
+.fa-chevron-up:before {
+    content: "\f077" !important;
 }
 
 #respuesta
