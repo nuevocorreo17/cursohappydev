@@ -15,6 +15,7 @@ date_default_timezone_set("America/Lima");
 $database = new Database();
 $db = $database->getConnection();
 
+$recaptcha = $_POST["g-recaptcha-response"];
 $nombre = $_POST["nombre"];
 $email = $_POST["email"];
 $asunto = $_POST["asunto"];
@@ -82,6 +83,32 @@ function is_ajax()
     return false;
 }
 
+function validar_recaptcha($recaptcha)
+{
+	$url = 'https://www.google.com/recaptcha/api/siteverify';
+	$data = array(
+        'secret' => '6LcmZNQhAAAAAJXABrGW6H3XgLfrXbdKcltg3RQn',
+        'response' => $recaptcha
+    );
+
+    $options = array(
+        'http' => array(
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data)
+        ),
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        )
+    );
+
+    $context  = stream_context_create($options);
+    $verify = file_get_contents($url, false, $context);
+
+    return json_decode($verify, true);
+}
+
 if(!isset($nombre) or empty($nombre))
 {
 	array_push($listaerrores, array(
@@ -119,63 +146,68 @@ if(!isset($mensaje) or empty($mensaje))
 if(is_ajax())
 {
 
-	if(count($listaerrores) > 0)
+	$respuestarecaptcha = validar_recaptcha($recaptcha);
+
+	if($respuestarecaptcha["success"] == TRUE)
 	{
-		$respuesta["tipo"] = 2;
-		$respuesta["errores"] = $listaerrores;
-	}else{
-
-		$declaracion = $db->prepare("INSERT INTO tb_contacto(nombre,email,asunto,mensaje,fecha) VALUES(:nombre,:email,:asunto,:mensaje,:fecha)");
-
-		$declaracion->bindParam(":nombre",$nombre,PDO::PARAM_STR);
-		$declaracion->bindParam(":email",$email,PDO::PARAM_STR);
-		$declaracion->bindParam(":asunto",$asunto,PDO::PARAM_STR);
-		$declaracion->bindParam(":mensaje",$mensaje,PDO::PARAM_STR);
-		$declaracion->bindParam(":fecha",$fecha,PDO::PARAM_STR);
-		$declaracion->execute();
-
-		$ultimoid =  $db->lastInsertId();
-
-		$agregado ="";
-
-		if($ultimoid)
+		if(count($listaerrores) > 0)
 		{
-
-			try {
-
-
-			    //Recipients
-			    $mail->setFrom('nuevocorreo17@gmail.com', 'ALonso');
-			    $mail->addAddress('jacobo.amaru@gmail.com', 'Jacobo Amaru');
-
-  
-			    $mail->isHTML(true);
-			    $mail->Subject = 'Prueba desde hosting';
-
-
-			    $body = "Nombre: ".$nombre."<br>";
-			    $body.= "Asunto: ".$asunto."<br>";
-			    $body.= "Email: ".$email."<br>";
-			    $body.= "Mensaje: ".$mensaje."<br>";
-			    $mail->Body    = $body;
-			    if($mail->send())
-			    {
-			    	$agregado = "Pronto nos comunicremos contigo.";
-			    }
-
-			} catch (Exception $e) {
-			    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-			}
-
-
-			$respuesta["tipo"] = 1;
-			$respuesta["mensaje"] = "Se registró satisfactoriamente. ".$agregado;
+			$respuesta["tipo"] = 2;
+			$respuesta["errores"] = $listaerrores;
 		}else{
-			$respuesta["tipo"] = 3;
-			$respuesta["mensaje"] = "Problema de insercion";
-		}
-	}
 
+			$declaracion = $db->prepare("INSERT INTO tb_contacto(nombre,email,asunto,mensaje,fecha) VALUES(:nombre,:email,:asunto,:mensaje,:fecha)");
+
+			$declaracion->bindParam(":nombre",$nombre,PDO::PARAM_STR);
+			$declaracion->bindParam(":email",$email,PDO::PARAM_STR);
+			$declaracion->bindParam(":asunto",$asunto,PDO::PARAM_STR);
+			$declaracion->bindParam(":mensaje",$mensaje,PDO::PARAM_STR);
+			$declaracion->bindParam(":fecha",$fecha,PDO::PARAM_STR);
+			$declaracion->execute();
+
+			$ultimoid =  $db->lastInsertId();
+
+			$agregado ="";
+
+			if($ultimoid)
+			{
+
+				try {
+
+
+				    //Recipients
+				    $mail->setFrom('nuevocorreo17@gmail.com', 'Alonso');
+				    $mail->addAddress('jacobo.amaru@gmail.com', 'Jacobo');
+				    $mail->isHTML(true);
+				    $mail->Subject = 'Prueba desde hosting';
+
+
+				    $body = "Nombre: ".$nombre."<br>";
+				    $body.= "Asunto: ".$asunto."<br>";
+				    $body.= "Email: ".$email."<br>";
+				    $body.= "Mensaje: ".$mensaje."<br>";
+				    $mail->Body    = $body;
+				    if($mail->send())
+				    {
+				    	$agregado = "Pronto nos comunicremos contigo.";
+				    }
+
+				} catch (Exception $e) {
+				    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+				}
+
+
+				$respuesta["tipo"] = 1;
+				$respuesta["mensaje"] = "Se registró satisfactoriamente. ".$agregado;
+			}else{
+				$respuesta["tipo"] = 3;
+				$respuesta["mensaje"] = "Problema de insercion";
+			}
+		}
+	}else{
+		$respuesta["tipo"] = 3;
+		$respuesta["mensaje"] = "Eres un robot";
+	}
 }else{
 	$respuesta["tipo"] = 3;
 	$respuesta["mensaje"] = "Problema de servidor";

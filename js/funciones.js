@@ -277,6 +277,7 @@ var acciones = {
 		{
 			jQuery("body").removeClass("abierto");
 		});
+		
 		setTimeout(function(){
 			var ancla = window.location.hash;
 			if (jQuery(ancla).length > 0)
